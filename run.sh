@@ -12,9 +12,11 @@ done
 
 scp -oStrictHostKeyChecking=no gen-tiles.py 'ubuntu@'$HOSTNAME:/tmp/gen-tiles.py
 
+scp -oStrictHostKeyChecking=no mapgen.sh 'ubuntu@'$HOSTNAME:/home/ubuntu
+
 echo "Generating maps..."
 
-ssh -oStrictHostKeyChecking=no 'ubuntu@'$HOSTNAME < mapgen.sh
+ssh -oStrictHostKeyChecking=no -oServerAliveInterval=100 'ubuntu@'$HOSTNAME bash /home/ubuntu/mapgen.sh
 
 echo "Copying data to local disk..."
 
