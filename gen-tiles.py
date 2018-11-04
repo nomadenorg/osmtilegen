@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from math import pi,cos,sin,log,exp,atan
 from subprocess import call
-import sys, os
+import sys, os, time
 from Queue import Queue
 
 import threading
@@ -100,29 +100,40 @@ class RenderThread:
 
 
     def loop(self):
-        while True:
-            #Fetch a tile from the queue and render it
-            r = self.q.get()
-            if (r == None):
+        try:
+            while True:
+                #Fetch a tile from the queue and render it
+                r = self.q.get()
+                if (r == None):
+                    self.q.task_done()
+                    break
+                else:
+                    (name, tile_uri, x, y, z) = r
+
+                exists= ""
+                if os.path.isfile(tile_uri):
+                    exists= "exists"
+                else:
+                    try:
+                        self.render_tile(tile_uri, x, y, z)
+                    except:
+                        print "Exception generating file ", name
+                        self.q.task_done()
+                        break
+                empty= ''
+                try:
+                    bytes=os.stat(tile_uri)[6]
+                    if bytes == 103:
+                        empty = " Empty Tile "
+                except:
+                    pass
+                self.printLock.acquire()
+                print name, ":", z, x, y, exists, empty
+                self.printLock.release()
                 self.q.task_done()
-                break
-            else:
-                (name, tile_uri, x, y, z) = r
-
-            exists= ""
-            if os.path.isfile(tile_uri):
-                exists= "exists"
-            else:
-                self.render_tile(tile_uri, x, y, z)
-            bytes=os.stat(tile_uri)[6]
-            empty= ''
-            if bytes == 103:
-                empty = " Empty Tile "
-            self.printLock.acquire()
-            print name, ":", z, x, y, exists, empty
-            self.printLock.release()
-            self.q.task_done()
-
+        except:
+            print "Uncaught exception in thread"
+            pass
 
 
 def render_tiles(bbox, mapfile, tile_dir, minZoom=1,maxZoom=18, name="unknown", num_threads=NUM_THREADS, tms_scheme=False):
@@ -180,15 +191,8 @@ def render_tiles(bbox, mapfile, tile_dir, minZoom=1,maxZoom=18, name="unknown", 
                 except KeyboardInterrupt:
                     raise SystemExit("Ctrl-c detected, exiting...")
 
-    # Signal render threads to exit by sending empty request to queue
-    for i in range(num_threads):
-        queue.put(None)
     # wait for pending rendering jobs to complete
     queue.join()
-    for renderer in renderers.values():
-        renderer.join()
-
-
 
 if __name__ == "__main__":
     home = os.environ['HOME']
@@ -257,4 +261,4 @@ if __name__ == "__main__":
 
     bbox = (8.4213643278, 53.3949251389, 10.3242585128, 53.9644376366)
     render_tiles(bbox, '/tmp/openstreetmap-carto/osm.xml', '/tmp/tiles/', 1, 16, "Hamburg")
-    exit(0)
+    os._exit(0)
