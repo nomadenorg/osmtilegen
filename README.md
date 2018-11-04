@@ -4,6 +4,8 @@ This set of scripts creates OpenStreetMap tiles of Hamburg for the Nomaden site.
 
 After we're finished you'll find a `tile.tar` in the local directory.
 
+See here for more info: [ofosos.org](https://ofosos.org/2018/11/04/osm-tile-creation-on-aws-spot/)
+
 ## Requirements
 
  - Python 3
