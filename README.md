@@ -30,3 +30,4 @@ https://github.com/mapnik/mapnik/blob/master/INSTALL.md
 https://github.com/gravitystorm/openstreetmap-carto/blob/master/INSTALL.md
 https://wiki.openstreetmap.org/wiki/PostGIS/Installation#Create_database
 https://wiki.openstreetmap.org/wiki/Osm2pgsql
+http://osmtipps.lefty1963.de/2008/10/api-und-bounding-box.html
