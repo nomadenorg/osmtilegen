@@ -1,0 +1,27 @@
+{
+    "BlockDeviceMappings": [
+	{
+	    "DeviceName": "/dev/sda1",
+	    "Ebs": {
+		"DeleteOnTermination": true,
+		"VolumeSize": 50,
+		"VolumeType": "gp2"
+	    }
+	}
+    ],
+    "EbsOptimized": true,
+    "ImageId": "ami-00b36349b3dba2ec3",
+    "InstanceType": "c4.4xlarge",
+    "KeyName": "thukidides-keypair",
+    "Monitoring": {
+	"Enabled": false
+    },
+    "NetworkInterfaces": [
+	{
+	    "AssociatePublicIpAddress": true,
+	    "DeleteOnTermination": true,
+	    "Groups": [ "sg-8e8783eb" ],
+	    "DeviceIndex": 0
+	}
+    ]
+}
