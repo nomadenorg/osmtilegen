@@ -23,7 +23,7 @@ sudo -u postgres psql --username=postgres --dbname=gis -c "CREATE EXTENSION hsto
 
 sudo apt-get -y install osm2pgsql
 
-# INSTALL carto
+# get the latest Hamburg extract for OSM
 
 cd /tmp
 
@@ -36,6 +36,8 @@ wget https://svn.openstreetmap.org/applications/rendering/mapnik/generate_image.
 
 wget https://svn.openstreetmap.org/applications/rendering/mapnik/generate_tiles.py
 
+# INSTALL carto
+
 curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 
 sudo apt-get install -y nodejs
@@ -44,8 +46,6 @@ sudo npm -g install carto
 
 git clone https://github.com/gravitystorm/openstreetmap-carto
 
-#cp project.mml openstreetmap-carto/
-
 cd openstreetmap-carto
 
 carto project.mml >osm.xml
@@ -53,15 +53,6 @@ carto project.mml >osm.xml
 # INSTALL mapnik
 
 cd /tmp
-
-#git clone https://github.com/mapnik/mapnik.git
-
-
-#cd mapnik
-
-#git submodule update --init
-
-#./configure
 
 sudo add-apt-repository -y ppa:no1wantdthisname/ppa
 
@@ -82,6 +73,8 @@ cd /tmp
 mkdir noto
 
 cd noto
+
+# Grab some extra noto fonts from Google
 
 wget https://noto-website-2.storage.googleapis.com/pkgs/Noto-hinted.zip
 
@@ -106,6 +99,8 @@ sudo su - postgres -c "cd /tmp/openstreetmap-carto; osm2pgsql -G --hstore --styl
 sudo -u postgres mkdir -p /tmp/tiles
 
 sudo -u postgres python ../gen-tiles.py
+
+# tar it all up for downloading
 
 cd /tmp
 
