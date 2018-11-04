@@ -13,6 +13,15 @@ After we're finished you'll find a `tile.tar` in the local directory.
  
 ## Running
 
+Be sure to set something similar to the following in you ssh client config or the connection may time out while generating the tiles.
+
+```
+Host *
+ServerAliveInterval 100
+```
+
+The call `run.sh`.
+
 ```
 $ bash run.sh
 ```
