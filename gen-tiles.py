@@ -185,8 +185,8 @@ def render_tiles(bbox, mapfile, tile_dir, minZoom=1,maxZoom=18, name="unknown", 
         queue.put(None)
     # wait for pending rendering jobs to complete
     queue.join()
-    for i in range(num_threads):
-        renderers[i].join()
+    for renderer in renderers.values():
+        renderer.join()
 
 
 
@@ -257,4 +257,4 @@ if __name__ == "__main__":
 
     bbox = (8.4213643278, 53.3949251389, 10.3242585128, 53.9644376366)
     render_tiles(bbox, '/tmp/openstreetmap-carto/osm.xml', '/tmp/tiles/', 1, 16, "Hamburg")
-    
+    exit(0)

@@ -24,7 +24,7 @@ while ! ssh -oStrictHostKeyChecking=no 'ubuntu@'$HOSTNAME test -f /tmp/tiles.tar
     sleep 30
 done
 
-sleep 5
+sleep 30
 
 echo "Copying data to local disk..."
 
