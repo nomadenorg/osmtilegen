@@ -16,7 +16,15 @@ scp -oStrictHostKeyChecking=no mapgen.sh 'ubuntu@'$HOSTNAME:/home/ubuntu
 
 echo "Generating maps..."
 
-ssh -oStrictHostKeyChecking=no -oServerAliveInterval=100 'ubuntu@'$HOSTNAME bash /home/ubuntu/mapgen.sh
+ssh -oStrictHostKeyChecking=no -oServerAliveInterval=100 'ubuntu@'$HOSTNAME "nohup bash /home/ubuntu/mapgen.sh > mapgen.out 2> mapgen.err < /dev/null &"
+
+echo "Waiting for map generation to complete..."
+
+while ! ssh -oStrictHostKeyChecking=no 'ubuntu@'$HOSTNAME test -f /tmp/tiles.tar; do
+    sleep 30
+done
+
+sleep 5
 
 echo "Copying data to local disk..."
 
