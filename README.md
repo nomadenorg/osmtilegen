@@ -22,3 +22,11 @@ Please make sure to terminate any spot requests that are left over in EC2 after 
 ## About
 
 Copyright (c) 2018, Mark Meyer (mark@ofosos.org)
+
+## Links
+
+https://wiki.openstreetmap.org/wiki/Creating_your_own_tiles
+https://github.com/mapnik/mapnik/blob/master/INSTALL.md
+https://github.com/gravitystorm/openstreetmap-carto/blob/master/INSTALL.md
+https://wiki.openstreetmap.org/wiki/PostGIS/Installation#Create_database
+https://wiki.openstreetmap.org/wiki/Osm2pgsql
