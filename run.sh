@@ -2,6 +2,8 @@
 
 set -xe
 
+echo "Requesting spot instance..."
+
 HOSTNAME=$(python3 request.py)
 
 while ! nc -z $HOSTNAME 22; do   
@@ -9,7 +11,17 @@ while ! nc -z $HOSTNAME 22; do
 done
 
 scp -oStrictHostKeyChecking=no gen-tiles.py 'ubuntu@'$HOSTNAME:/tmp/gen-tiles.py
+
+echo "Generating maps..."
+
 ssh -oStrictHostKeyChecking=no 'ubuntu@'$HOSTNAME < mapgen.sh
 
+echo "Copying data to local disk..."
+
 scp -oStrictHostKeyChecking=no 'ubuntu@'$HOSTNAME:/tmp/tiles.tar .
-ssh -oStrictHostKeyChecking=no 'ubuntu@'$HOSTNAME shutdown -h now
+
+echo "Done. Shutting down remote host..."
+
+ssh -oStrictHostKeyChecking=no 'ubuntu@'$HOSTNAME sudo shutdown -h now
+
+echo "Map generation finished."
