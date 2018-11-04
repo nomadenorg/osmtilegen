@@ -98,7 +98,7 @@ sudo su - postgres -c "cd /tmp/openstreetmap-carto; osm2pgsql -G --hstore --styl
 
 sudo -u postgres mkdir -p /tmp/tiles
 
-sudo -u postgres 'python ../gen-tiles.py || true'
+sudo -u postgres python ../gen-tiles.py
 
 # tar it all up for downloading
 
