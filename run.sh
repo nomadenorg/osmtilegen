@@ -7,7 +7,7 @@ echo "Requesting spot instance..."
 HOSTNAME=$(python3 request.py)
 
 while ! nc -z $HOSTNAME 22; do   
-  sleep 0.5 # wait for 1/10 of the second before check again
+  sleep 0.5 # wait for half a second before check again
 done
 
 scp -oStrictHostKeyChecking=no gen-tiles.py 'ubuntu@'$HOSTNAME:/tmp/gen-tiles.py
